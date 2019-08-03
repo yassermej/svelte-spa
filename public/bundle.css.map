@@ -1,0 +1,12 @@
+{
+  "version": 3,
+  "file": "bundle.css",
+  "sources": [
+    "../src/App.svelte"
+  ],
+  "sourcesContent": [
+    "<script>\n\texport let appName;\n\n\timport Router from 'svelte-spa-router'\n\timport Start from './routes/Start.svelte'\n\timport Quiz from './routes/Quiz.svelte'\n\timport Results from './routes/Results.svelte'\n\timport NotFound from './routes/NotFound.svelte'\n \n\tconst routes = {\n\t\t// Exact path\n\t\t'/': Start,\n\t\n\t\t// Using named parameters, with last being optional\n\t\t'/quiz/:items?': Quiz,\n\t\n\t\t// Wildcard parameter\n\t\t'/results': Results,\n\t\n\t\t// Catch-all\n\t\t// This is optional, but if present it must be the last\n\t\t'*': NotFound,\n\t}\n</script>\n\n<style>\n\th1 {\n\t\tcolor: purple;\n\t}\n</style>\n\n<body>\n    <Router {routes}/>\n\t<hr/>\n\t<h1>Hello {appName}!</h1>\n</body>"
+  ],
+  "names": [],
+  "mappings": "AA0BC,EAAE,cAAC,CAAC,AACH,KAAK,CAAE,MAAM,AACd,CAAC"
+}
