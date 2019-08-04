@@ -1,6 +1,6 @@
 <script>
-    import { lowestNumber, highestNumber, numberLimits, quizLength } from '../stores/stores.js';
-    
+    import { lowestNumber, highestNumber, numberLimits, quizLength } from '../stores/quiz-store.js';
+        
     console.table(numberLimits);
 
     function checkMin() {
@@ -32,15 +32,17 @@
 </script>
 
 <h1>START</h1>
-<label>
-	<input type=number bind:value={$lowestNumber} on:input={checkMin} min={numberLimits.lower} max={numberLimits.higher}>
-	<input type=range bind:value={$lowestNumber} on:input={checkMin} min={numberLimits.lower} max={numberLimits.higher}>
-</label>
-<label>
-	<input type=number bind:value={$highestNumber} on:input={checkMax} min={numberLimits.lower} max={numberLimits.higher}>
-	<input type=range bind:value={$highestNumber} on:input={checkMax} min={numberLimits.lower} max={numberLimits.higher}>
-</label>
-<label>
-	<input type=number bind:value={$quizLength} on:input={checkQuizLen} min=0 max={numberLimits.questions}>
-	<input type=range bind:value={$quizLength} on:input={checkQuizLen} min=0 max={numberLimits.questions}>
-</label>
+<form>
+    <label>
+        <input type=number bind:value={$lowestNumber} on:input={checkMin} min={numberLimits.lower} max={numberLimits.higher}>
+        <input type=range bind:value={$lowestNumber} on:input={checkMin} min={numberLimits.lower} max={numberLimits.higher}>
+    </label>
+    <label>
+        <input type=number bind:value={$highestNumber} on:input={checkMax} min={numberLimits.lower} max={numberLimits.higher}>
+        <input type=range bind:value={$highestNumber} on:input={checkMax} min={numberLimits.lower} max={numberLimits.higher}>
+    </label>
+    <label>
+        <input type=number bind:value={$quizLength} on:input={checkQuizLen} min=0 max={numberLimits.questions}>
+        <input type=range bind:value={$quizLength} on:input={checkQuizLen} min=0 max={numberLimits.questions}>
+    </label>
+</form>

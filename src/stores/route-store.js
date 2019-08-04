@@ -1,18 +1,13 @@
 import { writable } from 'svelte/store';
 
+// ROUTING COMPONENTS
+// The following components are added to the 'routes' object
+// in this store. The App.svelte component passes this store object
+// to its routing subcomponent.
 import Start from '../routes/Start.svelte'
 import Quiz from '../routes/Quiz.svelte'
 import Results from '../routes/Results.svelte'
 import NotFound from '../routes/NotFound.svelte'
-
-export const lowestNumber = writable(222);
-export const highestNumber = writable(555);
-export const quizLength = writable(1);
-export const numberLimits = {
-    lower: 0,
-    higher: 999,
-    questions: 30
-}
 
 // create 'routes' object to pass to Router component in markup
 export const routes = writable({

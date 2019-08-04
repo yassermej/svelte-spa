@@ -1,6 +1,7 @@
 <script>
 	// all variables are maintained in a single store
-	import { lowestNumber, highestNumber, quizLength, routes } from './stores/stores.js';
+	import { lowestNumber, highestNumber, quizLength } from './stores/quiz-store.js';
+	import { routes } from './stores/route-store.js';
 
 	// routed components must be in the ./routes folder
 	import Router from 'svelte-spa-router'
