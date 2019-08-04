@@ -898,7 +898,7 @@ var app = (function () {
     }
 
     function create_fragment$2(ctx) {
-    	var t0, a0, t2, a1, t4, a2, t6, a3;
+    	var t0, a0, t2, a1, t4, a2, t6, a3, t8;
 
     	function select_block_type(ctx) {
     		if (ctx.params.items) return create_if_block;
@@ -911,26 +911,27 @@ var app = (function () {
     	return {
     		c: function create() {
     			if_block.c();
-    			t0 = space();
+    			t0 = text("\n ⛒ \n");
     			a0 = element("a");
     			a0.textContent = "#/start";
-    			t2 = space();
+    			t2 = text(" ⛒ \n");
     			a1 = element("a");
     			a1.textContent = "#/quiz";
-    			t4 = space();
+    			t4 = text(" ⛒ \n");
     			a2 = element("a");
     			a2.textContent = "#/results";
-    			t6 = space();
+    			t6 = text(" ⛒ \n");
     			a3 = element("a");
     			a3.textContent = "#/spaceballs";
+    			t8 = text(" ⛒ ");
     			attr(a0, "href", "#/");
-    			add_location(a0, file$1, 5, 0, 87);
+    			add_location(a0, file$1, 6, 0, 107);
     			attr(a1, "href", "#/quiz");
-    			add_location(a1, file$1, 6, 0, 112);
+    			add_location(a1, file$1, 7, 0, 151);
     			attr(a2, "href", "#/results");
-    			add_location(a2, file$1, 7, 0, 140);
+    			add_location(a2, file$1, 8, 0, 198);
     			attr(a3, "href", "#/spaceballs");
-    			add_location(a3, file$1, 8, 0, 174);
+    			add_location(a3, file$1, 9, 0, 251);
     		},
 
     		l: function claim(nodes) {
@@ -947,6 +948,7 @@ var app = (function () {
     			insert(target, a2, anchor);
     			insert(target, t6, anchor);
     			insert(target, a3, anchor);
+    			insert(target, t8, anchor);
     		},
 
     		p: function update(changed, ctx) {
@@ -977,6 +979,7 @@ var app = (function () {
     				detach(a2);
     				detach(t6);
     				detach(a3);
+    				detach(t8);
     			}
     		}
     	};
@@ -1017,33 +1020,34 @@ var app = (function () {
     const file$2 = "src/routes/Results.svelte";
 
     function create_fragment$3(ctx) {
-    	var h1, t1, a0, t3, a1, t5, a2, t7, a3;
+    	var h1, t1, a0, t3, a1, t5, a2, t7, a3, t9;
 
     	return {
     		c: function create() {
     			h1 = element("h1");
     			h1.textContent = "RESULTS";
-    			t1 = space();
+    			t1 = text("\n ⛒ \n");
     			a0 = element("a");
     			a0.textContent = "#/start";
-    			t3 = space();
+    			t3 = text(" ⛒ \n");
     			a1 = element("a");
     			a1.textContent = "#/quiz";
-    			t5 = space();
+    			t5 = text(" ⛒ \n");
     			a2 = element("a");
     			a2.textContent = "#/results";
-    			t7 = space();
+    			t7 = text(" ⛒ \n");
     			a3 = element("a");
     			a3.textContent = "#/spaceballs";
-    			add_location(h1, file$2, 6, 0, 101);
+    			t9 = text(" ⛒ ");
+    			add_location(h1, file$2, 0, 0, 0);
     			attr(a0, "href", "#/");
-    			add_location(a0, file$2, 7, 0, 118);
+    			add_location(a0, file$2, 2, 0, 37);
     			attr(a1, "href", "#/quiz");
-    			add_location(a1, file$2, 8, 0, 143);
+    			add_location(a1, file$2, 3, 0, 81);
     			attr(a2, "href", "#/results");
-    			add_location(a2, file$2, 9, 0, 171);
+    			add_location(a2, file$2, 4, 0, 128);
     			attr(a3, "href", "#/spaceballs");
-    			add_location(a3, file$2, 10, 0, 205);
+    			add_location(a3, file$2, 5, 0, 181);
     		},
 
     		l: function claim(nodes) {
@@ -1060,6 +1064,7 @@ var app = (function () {
     			insert(target, a2, anchor);
     			insert(target, t7, anchor);
     			insert(target, a3, anchor);
+    			insert(target, t9, anchor);
     		},
 
     		p: noop,
@@ -1077,6 +1082,7 @@ var app = (function () {
     				detach(a2);
     				detach(t7);
     				detach(a3);
+    				detach(t9);
     			}
     		}
     	};
@@ -1094,33 +1100,35 @@ var app = (function () {
     const file$3 = "src/routes/NotFound.svelte";
 
     function create_fragment$4(ctx) {
-    	var h1, t1, a0, t3, a1, t5, a2, t7, a3;
+    	var h1, t0, t1, t2, a0, t4, a1, t6, a2, t8, a3, t10;
 
     	return {
     		c: function create() {
     			h1 = element("h1");
-    			h1.textContent = "NOT FOUND";
-    			t1 = space();
+    			t0 = text(ctx.$location);
+    			t1 = text(" NOT FOUND");
+    			t2 = text("\n ⛒ \n");
     			a0 = element("a");
     			a0.textContent = "#/start";
-    			t3 = space();
+    			t4 = text(" ⛒ \n");
     			a1 = element("a");
     			a1.textContent = "#/quiz";
-    			t5 = space();
+    			t6 = text(" ⛒ \n");
     			a2 = element("a");
     			a2.textContent = "#/results";
-    			t7 = space();
+    			t8 = text(" ⛒ \n");
     			a3 = element("a");
     			a3.textContent = "#/spaceballs";
-    			add_location(h1, file$3, 0, 0, 0);
+    			t10 = text(" ⛒ ");
+    			add_location(h1, file$3, 6, 0, 98);
     			attr(a0, "href", "#/");
-    			add_location(a0, file$3, 1, 0, 19);
+    			add_location(a0, file$3, 8, 0, 149);
     			attr(a1, "href", "#/quiz");
-    			add_location(a1, file$3, 2, 0, 44);
+    			add_location(a1, file$3, 9, 0, 193);
     			attr(a2, "href", "#/results");
-    			add_location(a2, file$3, 3, 0, 72);
+    			add_location(a2, file$3, 10, 0, 240);
     			attr(a3, "href", "#/spaceballs");
-    			add_location(a3, file$3, 4, 0, 106);
+    			add_location(a3, file$3, 11, 0, 293);
     		},
 
     		l: function claim(nodes) {
@@ -1129,40 +1137,58 @@ var app = (function () {
 
     		m: function mount(target, anchor) {
     			insert(target, h1, anchor);
-    			insert(target, t1, anchor);
+    			append(h1, t0);
+    			append(h1, t1);
+    			insert(target, t2, anchor);
     			insert(target, a0, anchor);
-    			insert(target, t3, anchor);
+    			insert(target, t4, anchor);
     			insert(target, a1, anchor);
-    			insert(target, t5, anchor);
+    			insert(target, t6, anchor);
     			insert(target, a2, anchor);
-    			insert(target, t7, anchor);
+    			insert(target, t8, anchor);
     			insert(target, a3, anchor);
+    			insert(target, t10, anchor);
     		},
 
-    		p: noop,
+    		p: function update(changed, ctx) {
+    			if (changed.$location) {
+    				set_data(t0, ctx.$location);
+    			}
+    		},
+
     		i: noop,
     		o: noop,
 
     		d: function destroy(detaching) {
     			if (detaching) {
     				detach(h1);
-    				detach(t1);
+    				detach(t2);
     				detach(a0);
-    				detach(t3);
+    				detach(t4);
     				detach(a1);
-    				detach(t5);
+    				detach(t6);
     				detach(a2);
-    				detach(t7);
+    				detach(t8);
     				detach(a3);
+    				detach(t10);
     			}
     		}
     	};
     }
 
+    function instance$2($$self, $$props, $$invalidate) {
+    	let $location;
+
+    	validate_store(location, 'location');
+    	subscribe($$self, location, $$value => { $location = $$value; $$invalidate('$location', $location); });
+
+    	return { $location };
+    }
+
     class NotFound extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, null, create_fragment$4, safe_not_equal, []);
+    		init(this, options, instance$2, create_fragment$4, safe_not_equal, []);
     	}
     }
 
@@ -1177,7 +1203,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (57:3) {#each options as anOption}
+    // (58:3) {#each options as anOption}
     function create_each_block(ctx) {
     	var option, t0_value = ctx.anOption.text, t0, t1, option_value_value;
 
@@ -1188,7 +1214,7 @@ var app = (function () {
     			t1 = space();
     			option.__value = option_value_value = ctx.anOption;
     			option.value = option.__value;
-    			add_location(option, file$4, 57, 4, 1201);
+    			add_location(option, file$4, 58, 4, 1202);
     		},
 
     		m: function mount(target, anchor) {
@@ -1245,14 +1271,14 @@ var app = (function () {
     			for (var i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
-    			add_location(hr0, file$4, 51, 1, 1084);
+    			add_location(hr0, file$4, 52, 1, 1085);
     			attr(h1, "class", "svelte-i7qo5m");
-    			add_location(h1, file$4, 52, 1, 1091);
-    			add_location(hr1, file$4, 53, 1, 1118);
+    			add_location(h1, file$4, 53, 1, 1092);
+    			add_location(hr1, file$4, 54, 1, 1119);
     			if (ctx.selected === void 0) add_render_callback(() => ctx.select_change_handler.call(select));
-    			add_location(select, file$4, 55, 2, 1135);
-    			add_location(form, file$4, 54, 1, 1126);
-    			add_location(body, file$4, 49, 0, 1053);
+    			add_location(select, file$4, 56, 2, 1136);
+    			add_location(form, file$4, 55, 1, 1127);
+    			add_location(body, file$4, 50, 0, 1054);
     			dispose = listen(select, "change", ctx.select_change_handler);
     		},
 
@@ -1344,7 +1370,7 @@ var app = (function () {
     	};
     }
 
-    function instance$2($$self, $$props, $$invalidate) {
+    function instance$3($$self, $$props, $$invalidate) {
     	let { appName } = $$props;
 
     	// create 'routes' object to pass to Router component in markup
@@ -1407,7 +1433,7 @@ var app = (function () {
     class App extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$2, create_fragment$5, safe_not_equal, ["appName"]);
+    		init(this, options, instance$3, create_fragment$5, safe_not_equal, ["appName"]);
 
     		const { ctx } = this.$$;
     		const props = options.props || {};

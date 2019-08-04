@@ -4,6 +4,7 @@
 	// routed components must be in the ./routes folder
 	import Router from 'svelte-spa-router'
 	import { replace } from 'svelte-spa-router'
+
 	import Start from './routes/Start.svelte'
 	import Quiz from './routes/Quiz.svelte'
 	import Results from './routes/Results.svelte'
