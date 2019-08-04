@@ -51,7 +51,7 @@
 <body>
     <Router {routes}/>
 	<hr/>
-	<h1>Hello {appName}!</h1>
+	<h1>Hello {appName}! (dev)</h1>
 	<hr />
 	<form>
 		<select bind:value={selected}>

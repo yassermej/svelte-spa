@@ -1214,7 +1214,7 @@ var app = (function () {
     			t1 = space();
     			option.__value = option_value_value = ctx.anOption;
     			option.value = option.__value;
-    			add_location(option, file$4, 58, 4, 1202);
+    			add_location(option, file$4, 58, 4, 1208);
     		},
 
     		m: function mount(target, anchor) {
@@ -1261,7 +1261,7 @@ var app = (function () {
     			h1 = element("h1");
     			t2 = text("Hello ");
     			t3 = text(ctx.appName);
-    			t4 = text("!");
+    			t4 = text("! (dev)");
     			t5 = space();
     			hr1 = element("hr");
     			t6 = space();
@@ -1274,10 +1274,10 @@ var app = (function () {
     			add_location(hr0, file$4, 52, 1, 1085);
     			attr(h1, "class", "svelte-i7qo5m");
     			add_location(h1, file$4, 53, 1, 1092);
-    			add_location(hr1, file$4, 54, 1, 1119);
+    			add_location(hr1, file$4, 54, 1, 1125);
     			if (ctx.selected === void 0) add_render_callback(() => ctx.select_change_handler.call(select));
-    			add_location(select, file$4, 56, 2, 1136);
-    			add_location(form, file$4, 55, 1, 1127);
+    			add_location(select, file$4, 56, 2, 1142);
+    			add_location(form, file$4, 55, 1, 1133);
     			add_location(body, file$4, 50, 0, 1054);
     			dispose = listen(select, "change", ctx.select_change_handler);
     		},
