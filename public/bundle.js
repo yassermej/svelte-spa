@@ -45,6 +45,12 @@ var app = (function () {
     function detach(node) {
         node.parentNode.removeChild(node);
     }
+    function destroy_each(iterations, detaching) {
+        for (let i = 0; i < iterations.length; i += 1) {
+            if (iterations[i])
+                iterations[i].d(detaching);
+        }
+    }
     function element(name) {
         return document.createElement(name);
     }
@@ -56,6 +62,10 @@ var app = (function () {
     }
     function empty() {
         return text('');
+    }
+    function listen(node, event, handler, options) {
+        node.addEventListener(event, handler, options);
+        return () => node.removeEventListener(event, handler, options);
     }
     function attr(node, attribute, value) {
         if (value == null)
@@ -70,6 +80,19 @@ var app = (function () {
         data = '' + data;
         if (text.data !== data)
             text.data = data;
+    }
+    function select_option(select, value) {
+        for (let i = 0; i < select.options.length; i += 1) {
+            const option = select.options[i];
+            if (option.__value === value) {
+                option.selected = true;
+                return;
+            }
+        }
+    }
+    function select_value(select) {
+        const selected_option = select.querySelector(':checked') || select.options[0];
+        return selected_option && selected_option.__value;
     }
 
     let current_component;
@@ -579,6 +602,25 @@ var app = (function () {
     ($loc) => $loc.querystring
     );
 
+    /**
+     * Replaces the current page but without modifying the history stack.
+     *
+     * @param {string} location - Path to navigate to (must start with `/`)
+     */
+    function replace(location) {
+    if (!location || location.length < 1 || location.charAt(0) != '/') {
+        throw Error('Invalid parameter location')
+    }
+
+    // Execute this code when the current call stack is complete
+    setTimeout(() => {
+        history.replaceState(undefined, undefined, '#' + location);
+
+        // The method above doesn't trigger the hashchange event, so let's do that manually
+        window.dispatchEvent(new Event('hashchange'));
+    }, 0);
+    }
+
     function instance($$self, $$props, $$invalidate) {
     	let $loc;
 
@@ -719,33 +761,34 @@ var app = (function () {
     const file = "src/routes/Start.svelte";
 
     function create_fragment$1(ctx) {
-    	var h1, t1, a0, t3, a1, t5, a2, t7, a3;
+    	var h1, t1, a0, t3, a1, t5, a2, t7, a3, t9;
 
     	return {
     		c: function create() {
     			h1 = element("h1");
     			h1.textContent = "START";
-    			t1 = space();
+    			t1 = text("\n ⛒ \n");
     			a0 = element("a");
     			a0.textContent = "#/start";
-    			t3 = space();
+    			t3 = text(" ⛒ \n");
     			a1 = element("a");
     			a1.textContent = "#/quiz";
-    			t5 = space();
+    			t5 = text(" ⛒ \n");
     			a2 = element("a");
     			a2.textContent = "#/results";
-    			t7 = space();
+    			t7 = text(" ⛒ \n");
     			a3 = element("a");
     			a3.textContent = "#/spaceballs";
+    			t9 = text(" ⛒ ");
     			add_location(h1, file, 0, 0, 0);
     			attr(a0, "href", "#/");
-    			add_location(a0, file, 1, 0, 15);
+    			add_location(a0, file, 2, 0, 35);
     			attr(a1, "href", "#/quiz");
-    			add_location(a1, file, 2, 0, 40);
+    			add_location(a1, file, 3, 0, 79);
     			attr(a2, "href", "#/results");
-    			add_location(a2, file, 3, 0, 68);
+    			add_location(a2, file, 4, 0, 126);
     			attr(a3, "href", "#/spaceballs");
-    			add_location(a3, file, 4, 0, 102);
+    			add_location(a3, file, 5, 0, 179);
     		},
 
     		l: function claim(nodes) {
@@ -762,6 +805,7 @@ var app = (function () {
     			insert(target, a2, anchor);
     			insert(target, t7, anchor);
     			insert(target, a3, anchor);
+    			insert(target, t9, anchor);
     		},
 
     		p: noop,
@@ -779,6 +823,7 @@ var app = (function () {
     				detach(a2);
     				detach(t7);
     				detach(a3);
+    				detach(t9);
     			}
     		}
     	};
@@ -990,15 +1035,15 @@ var app = (function () {
     			t7 = space();
     			a3 = element("a");
     			a3.textContent = "#/spaceballs";
-    			add_location(h1, file$2, 6, 0, 95);
+    			add_location(h1, file$2, 6, 0, 101);
     			attr(a0, "href", "#/");
-    			add_location(a0, file$2, 7, 0, 112);
+    			add_location(a0, file$2, 7, 0, 118);
     			attr(a1, "href", "#/quiz");
-    			add_location(a1, file$2, 8, 0, 137);
+    			add_location(a1, file$2, 8, 0, 143);
     			attr(a2, "href", "#/results");
-    			add_location(a2, file$2, 9, 0, 165);
+    			add_location(a2, file$2, 9, 0, 171);
     			attr(a3, "href", "#/spaceballs");
-    			add_location(a3, file$2, 10, 0, 199);
+    			add_location(a3, file$2, 10, 0, 205);
     		},
 
     		l: function claim(nodes) {
@@ -1037,21 +1082,10 @@ var app = (function () {
     	};
     }
 
-    function instance$2($$self, $$props, $$invalidate) {
-    	let $location;
-
-    	validate_store(location, 'location');
-    	subscribe($$self, location, $$value => { $location = $$value; $$invalidate('$location', $location); });
-
-    	console.log($location);
-
-    	return {};
-    }
-
     class Results extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$2, create_fragment$3, safe_not_equal, []);
+    		init(this, options, null, create_fragment$3, safe_not_equal, []);
     	}
     }
 
@@ -1133,32 +1167,93 @@ var app = (function () {
     }
 
     /* src/App.svelte generated by Svelte v3.6.10 */
+    const { console: console_1 } = globals;
 
     const file$4 = "src/App.svelte";
 
+    function get_each_context(ctx, list, i) {
+    	const child_ctx = Object.create(ctx);
+    	child_ctx.anOption = list[i];
+    	return child_ctx;
+    }
+
+    // (57:3) {#each options as anOption}
+    function create_each_block(ctx) {
+    	var option, t0_value = ctx.anOption.text, t0, t1, option_value_value;
+
+    	return {
+    		c: function create() {
+    			option = element("option");
+    			t0 = text(t0_value);
+    			t1 = space();
+    			option.__value = option_value_value = ctx.anOption;
+    			option.value = option.__value;
+    			add_location(option, file$4, 57, 4, 1201);
+    		},
+
+    		m: function mount(target, anchor) {
+    			insert(target, option, anchor);
+    			append(option, t0);
+    			append(option, t1);
+    		},
+
+    		p: function update(changed, ctx) {
+    			option.value = option.__value;
+    		},
+
+    		d: function destroy(detaching) {
+    			if (detaching) {
+    				detach(option);
+    			}
+    		}
+    	};
+    }
+
     function create_fragment$5(ctx) {
-    	var body, t0, hr, t1, h1, t2, t3, t4, current;
+    	var body, t0, hr0, t1, h1, t2, t3, t4, t5, hr1, t6, form, select, current, dispose;
 
     	var router = new Router({
     		props: { routes: ctx.routes },
     		$$inline: true
     	});
 
+    	var each_value = ctx.options;
+
+    	var each_blocks = [];
+
+    	for (var i = 0; i < each_value.length; i += 1) {
+    		each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
+    	}
+
     	return {
     		c: function create() {
     			body = element("body");
     			router.$$.fragment.c();
     			t0 = space();
-    			hr = element("hr");
+    			hr0 = element("hr");
     			t1 = space();
     			h1 = element("h1");
     			t2 = text("Hello ");
     			t3 = text(ctx.appName);
     			t4 = text("!");
-    			add_location(hr, file$4, 33, 1, 612);
+    			t5 = space();
+    			hr1 = element("hr");
+    			t6 = space();
+    			form = element("form");
+    			select = element("select");
+
+    			for (var i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].c();
+    			}
+    			add_location(hr0, file$4, 51, 1, 1084);
     			attr(h1, "class", "svelte-i7qo5m");
-    			add_location(h1, file$4, 34, 1, 619);
-    			add_location(body, file$4, 31, 0, 581);
+    			add_location(h1, file$4, 52, 1, 1091);
+    			add_location(hr1, file$4, 53, 1, 1118);
+    			if (ctx.selected === void 0) add_render_callback(() => ctx.select_change_handler.call(select));
+    			add_location(select, file$4, 55, 2, 1135);
+    			add_location(form, file$4, 54, 1, 1126);
+    			add_location(body, file$4, 49, 0, 1053);
+    			dispose = listen(select, "change", ctx.select_change_handler);
     		},
 
     		l: function claim(nodes) {
@@ -1169,12 +1264,24 @@ var app = (function () {
     			insert(target, body, anchor);
     			mount_component(router, body, null);
     			append(body, t0);
-    			append(body, hr);
+    			append(body, hr0);
     			append(body, t1);
     			append(body, h1);
     			append(h1, t2);
     			append(h1, t3);
     			append(h1, t4);
+    			append(body, t5);
+    			append(body, hr1);
+    			append(body, t6);
+    			append(body, form);
+    			append(form, select);
+
+    			for (var i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].m(select, null);
+    			}
+
+    			select_option(select, ctx.selected);
+
     			current = true;
     		},
 
@@ -1186,6 +1293,29 @@ var app = (function () {
     			if (!current || changed.appName) {
     				set_data(t3, ctx.appName);
     			}
+
+    			if (changed.options) {
+    				each_value = ctx.options;
+
+    				for (var i = 0; i < each_value.length; i += 1) {
+    					const child_ctx = get_each_context(ctx, each_value, i);
+
+    					if (each_blocks[i]) {
+    						each_blocks[i].p(changed, child_ctx);
+    					} else {
+    						each_blocks[i] = create_each_block(child_ctx);
+    						each_blocks[i].c();
+    						each_blocks[i].m(select, null);
+    					}
+    				}
+
+    				for (; i < each_blocks.length; i += 1) {
+    					each_blocks[i].d(1);
+    				}
+    				each_blocks.length = each_value.length;
+    			}
+
+    			if (changed.selected) select_option(select, ctx.selected);
     		},
 
     		i: function intro(local) {
@@ -1206,13 +1336,18 @@ var app = (function () {
     			}
 
     			destroy_component(router);
+
+    			destroy_each(each_blocks, detaching);
+
+    			dispose();
     		}
     	};
     }
 
-    function instance$3($$self, $$props, $$invalidate) {
+    function instance$2($$self, $$props, $$invalidate) {
     	let { appName } = $$props;
-     
+
+    	// create 'routes' object to pass to Router component in markup
     	const routes = {
     		// Exact path
     		'/': Start,
@@ -1228,27 +1363,56 @@ var app = (function () {
     		'*': NotFound,
     	};
 
+    	let options = [
+    		{ id: '', text: `Start` },
+    		{ id: 'quiz', text: `Quiz` },
+    		{ id: 'quiz/20', text: `Quiz 20	` },
+    		{ id: 'results', text: `Results` },
+    		{ id: 'WRONG', text: `Bad Path` }
+    	];
+
+    	let selected = { id: '', text: `Start` };
+
     	const writable_props = ['appName'];
     	Object.keys($$props).forEach(key => {
-    		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<App> was created with unknown prop '${key}'`);
+    		if (!writable_props.includes(key) && !key.startsWith('$$')) console_1.warn(`<App> was created with unknown prop '${key}'`);
     	});
+
+    	function select_change_handler() {
+    		selected = select_value(this);
+    		$$invalidate('selected', selected);
+    		$$invalidate('options', options);
+    	}
 
     	$$self.$set = $$props => {
     		if ('appName' in $$props) $$invalidate('appName', appName = $$props.appName);
     	};
 
-    	return { appName, routes };
+    	$$self.$$.update = ($$dirty = { selected: 1 }) => {
+    		if ($$dirty.selected) { {
+    				replace(`/${selected.id}`);
+    				console.table(selected.id);
+    			} }
+    	};
+
+    	return {
+    		appName,
+    		routes,
+    		options,
+    		selected,
+    		select_change_handler
+    	};
     }
 
     class App extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$3, create_fragment$5, safe_not_equal, ["appName"]);
+    		init(this, options, instance$2, create_fragment$5, safe_not_equal, ["appName"]);
 
     		const { ctx } = this.$$;
     		const props = options.props || {};
     		if (ctx.appName === undefined && !('appName' in props)) {
-    			console.warn("<App> was created without expected prop 'appName'");
+    			console_1.warn("<App> was created without expected prop 'appName'");
     		}
     	}
 

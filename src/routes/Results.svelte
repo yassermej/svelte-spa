@@ -1,7 +1,7 @@
 <script>
-	import { location } from 'svelte-spa-router'
+	// import { location } from 'svelte-spa-router'
 
-    console.log($location);
+    // console.log($location);
 </script>
 
 <h1>RESULTS</h1>
