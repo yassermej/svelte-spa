@@ -1,10 +1,11 @@
 import { writable } from 'svelte/store';
 
-export const lowestNumber = writable(222);
-export const highestNumber = writable(555);
-export const quizLength = writable(1);
-export const numberLimits = {
+export const lowestNumber = writable(0);
+export const highestNumber = writable(999);
+export const quizLength = writable(15);
+export const numberLimits = writable({
     lower: 0,
     higher: 999,
-    questions: 30
-}
+    questions: 20
+});
+export const numberList = writable([]);
