@@ -8,6 +8,7 @@
 	// 'replace' function allows programatic setting of routes
 	import { replace } from 'svelte-spa-router';
 
+// options and selected are development/debugging code
 	let options = [
 		{ id: '', text: `Start` },
 		{ id: 'quiz', text: `Quiz` },
