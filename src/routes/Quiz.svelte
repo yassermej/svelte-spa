@@ -13,26 +13,21 @@
 </script>
 
 <style>
-.input-form {
-    display: inline-block;
-    border: 1px inset #ccc;
-}
-
-.input-form input {
+.playSound {
+    width: 40px;
+    height: 40px;
     border: none;
-    padding: 0;
-}
-
-.input-form button {
-    border: none;
-    background: none;
+    /* background-image: url('https://picsum.photos/40'); */
+    background-image: url('images/pngkey.com-sound-png-475037.png');
+    cursor: pointer;
 }
 </style>
 
 {#if $numberList}
-    <form class="input-form" action="">
-        <input name="responseNumber" />
-            <button><img src="../resources/iconfinder_volume-24_103167.png" alt="Play Audio" /></button>
+    <form action="">
+        <label for="numberInput">Enter the number you hear</label>
+        <button class="playSound" />
+        <input type="number" name="numberInput" alt="input the number you hear" />
     </form>
 {:else}
     <h1>QUIZ</h1>
