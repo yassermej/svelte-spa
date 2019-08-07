@@ -10,3 +10,4 @@ export const numberLimits = writable({
 });
 export const numberList = writable([]);
 export const userResponses = writable([]);
+export const totalCorrect = writable(0);

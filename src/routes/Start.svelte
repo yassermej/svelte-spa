@@ -5,7 +5,7 @@
     import { 
         lowestNumber, highestNumber, quizLength,
         numberLimits,
-        numberList, userResponses
+        numberList, userResponses, totalCorrect
     } from '../stores/quiz-store.js';
 
     // console.table(numberLimits);
@@ -44,16 +44,21 @@
         if ($quizLength < 0) $quizLength = 1;
         if ($quizLength > $numberLimits.questions || $quizLength === undefined) $quizLength = $numberLimits.questions;
 
-        // clear lists of random numbers and user responses (just in case)
+        // clear lists of random numbers, user responses, 
+        // and correct counter (just in case old data lingers)
         $numberList = [];
         $userResponses = [];
+        $totalCorrect = 0;
+
+        // generate random numbers inclusive of the lowest 
+        // and highest numbers selected by the user
         for (let i = 0; i < $quizLength; i++) {
             let randNumber = Math.floor(Math.random() 
                 * ($highestNumber - $lowestNumber + 1) 
                 + $lowestNumber);
             $numberList = [...$numberList, randNumber];
         }
-        // use svelte-spa-router 'replace' method to navigate away
+        // use svelte-spa-router 'replace' method to navigate to quiz component
         replace("/quiz");
     }
 </script>
