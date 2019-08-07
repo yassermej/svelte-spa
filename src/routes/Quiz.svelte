@@ -12,18 +12,30 @@
     let questionCounter = 0;
     let percentageCorrect = 0;
 
-    $: percentageCorrect = (Number.parseInt(($totalCorrect / questionCounter) * 100));
+    $: if (questionCounter > 0) {
+        percentageCorrect = (Number.parseInt(($totalCorrect / questionCounter) * 100));
+        } else {
+        percentageCorrect = '0';
+        }
+
+    // $numberList[0] = 911; // Responsive voice literally says "nueve uno uno" for the number '911'!
 
     onMount(() => {
+        // get things started by saying the first number when component mounts
         sayCurrentNumber();
     })
 
     function sayCurrentNumber() {
         if(parseInt($numberList[questionCounter])) {
-            window.responsiveVoice.speak(
-            String($numberList[questionCounter]),
-            "Spanish Latin American Female"
-            );
+            if(parseInt($numberList[questionCounter]) === 911) {
+                window.responsiveVoice.speak(
+                    String("novecientos once"),
+                    "Spanish Latin American Female");
+            } else {
+                window.responsiveVoice.speak(
+                    String($numberList[questionCounter]),
+                    "Spanish Latin American Female");
+            }
         }
     }
 
@@ -51,14 +63,20 @@
             if(questionCounter < $numberList.length) {
                 sayCurrentNumber();
             } else {
-                replace("/results");
+                presentResults();
             }
         }
+    }
+
+    function presentResults() {
+        // use function imported from svelte-spa-router
+        // to navigate to the results component path
+        replace("/results");
     }
 </script>
 
 <style>
-    .playSound, .submitButton {
+    .playSound, .submitButton, .endQuiz {
         border-radius: 3px;
         border: 1px solid #00E;
         display: inline-block;
@@ -101,12 +119,16 @@
             on:submit="{submitAnswer}">
             Check
         </button>
+                <button class="endQuiz"
+            type="button"
+            on:click="{presentResults}">
+            End
+        </button>
+
     </form>
 {:else}
     <h1>QUIZ</h1>
     <h3>Error: No number list!</h3>
 {/if}
-{#if questionCounter > 0}
-    <p>{$totalCorrect} correct ({percentageCorrect}%)</p>
-    <p>{$numberList.length - questionCounter} of {$numberList.length} remaining</p>
-{/if}
+<p>{$totalCorrect} correct ({percentageCorrect}%)</p>
+<p>{$numberList.length - questionCounter} of {$numberList.length} remaining</p>
