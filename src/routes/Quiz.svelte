@@ -1,5 +1,6 @@
 <script>
     import { onMount } from 'svelte';
+    import { replace } from 'svelte-spa-router';
 
     import { 
         quizLength,
@@ -36,22 +37,24 @@
     }
 
     function submitAnswer(event) {
-        // console.table(event);
 
         if (!validateInput()) { return false; }
 
         if(event.key === 'Enter' || event.type === "submit") {
-            if(currentResponse === parseInt($numberList[questionCounter])) {
-                // console.log('match!');
+            if(parseInt(currentResponse) === parseInt($numberList[questionCounter])) {
                 $totalCorrect++;
             }
-            $userResponses[questionCounter] = parseInt($numberList[questionCounter]);
+            $userResponses[questionCounter] = parseInt(currentResponse);
             questionCounter++;
             currentResponse = '';
-            sayCurrentNumber();
+
+            if(questionCounter < $numberList.length) {
+                sayCurrentNumber();
+            } else {
+                replace("/results");
+            }
         }
     }
-
 </script>
 
 <style>

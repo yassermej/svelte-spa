@@ -8,8 +8,6 @@
         numberList, userResponses, totalCorrect
     } from '../stores/quiz-store.js';
 
-    // console.table(numberLimits);
-
     function checkMin() {
         if ($lowestNumber >= $highestNumber) {
             $highestNumber = $lowestNumber;
@@ -25,7 +23,6 @@
     }
 
     function checkQuizLen() {
-        // console.log('checkQuizLen()');
         if ($quizLength > $numberLimits.questions) {
             quizLength.update(n => $numberLimits.questions)
         } else if ($quizLength < 1) {
