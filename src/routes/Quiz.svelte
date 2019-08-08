@@ -27,7 +27,8 @@
     });
 
     function sayCurrentNumber() {
-        if(parseInt($numberList[questionCounter])) {
+        if(parseInt($numberList[questionCounter]) >= 0) {
+            // Responsive voice literally says "nueve uno uno" for the number '911'!
             if(parseInt($numberList[questionCounter]) === 911) {
                 window.responsiveVoice.speak(
                     String("novecientos once"),
@@ -41,7 +42,6 @@
     }
 
     function validateInput() {
-
         if(Number.isInteger(currentResponse) && (currentResponse >= $numberLimits.lower) && (currentResponse <= $numberLimits.higher)) {
             return true;
         } else {
@@ -50,7 +50,6 @@
     }
 
     function submitAnswer(event) {
-
         if (!validateInput()) { return false; }
 
         if(event.key === 'Enter' || event.type === "submit") {

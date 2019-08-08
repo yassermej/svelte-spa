@@ -6,7 +6,8 @@
         numberList, userResponses, totalCorrect
     } from '../stores/quiz-store.js';
     console.log($numberList);
-    $: columnCount = (Number.parseInt($numberList.length / 10));
+
+    $: columnCount = Math.ceil(Number.parseInt($numberList.length) / 10);
 
     // pre-filled lists for debugging
     // $numberList = [12, 221, 15, 750, 911, 454, 312, 12, 682, 555,
@@ -34,7 +35,12 @@
     }
     ul {
         list-style: none;
-        padding-left: 10px;
+        margin:0;
+        padding:0;
+    }
+    ul > li {
+    display: inline-block;
+    width: 100%;
     }
     li {
         display: inline-block;
@@ -55,7 +61,7 @@
 <div style="column-count: {columnCount}; columns: {columnCount};">
     <ul>
     {#each $numberList as aNumber, i}
-        <li>{i}-<ResultsRightWrong 
+        <li><ResultsRightWrong 
                 aQuizNumber={aNumber} 
                 aQuizResponse={$userResponses[i]} 
             /></li>

@@ -12,7 +12,7 @@
     function playNumber(event) {
         // console.table(event.target);
         let aNumber = event.target.value;
-        if(parseInt(aNumber)) {
+        if(parseInt(aNumber) >= 0) {
             if(parseInt(aNumber) === 911) {
                 window.responsiveVoice.speak(
                     String("novecientos once"),
@@ -40,7 +40,7 @@
         cursor: pointer;
         color: #ff0000;
         padding: auto;
-        font-size: 14px;
+        font-size: 16px;
         font-style: bold;
         text-align: left;
         width: 6em;
