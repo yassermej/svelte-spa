@@ -1,9 +1,9 @@
 <script>
     import { onMount } from 'svelte';
-    import { audioIconPath } from '../stores/quiz-store.js';
+    import { audioIconPath, longWords } from '../stores/quiz-store.js';
 
-    export let aQuizNumber = 999;
-    export let aQuizResponse = 909;
+    export let aQuizNumber;
+    export let aQuizResponse;
 
     onMount (() => {
         window.responsiveVoice.cancel();
@@ -13,9 +13,9 @@
         // console.table(event.target);
         let aNumber = event.target.value;
         if(parseInt(aNumber) >= 0) {
-            if(parseInt(aNumber) === 911) {
+            if($longWords[aNumber]) {
                 window.responsiveVoice.speak(
-                    String("novecientos once"),
+                    $longWords[aNumber],
                     "Spanish Latin American Female");
             } else {
                 window.responsiveVoice.speak(

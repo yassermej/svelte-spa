@@ -6,6 +6,7 @@
         quizLength,
         numberLimits,
         audioIconPath,
+        longWords,
         numberList, userResponses, totalCorrect
     } from '../stores/quiz-store.js';
 
@@ -29,13 +30,14 @@
     function sayCurrentNumber() {
         if(parseInt($numberList[questionCounter]) >= 0) {
             // Responsive voice literally says "nueve uno uno" for the number '911'!
-            if(parseInt($numberList[questionCounter]) === 911) {
+            let aNumber = $numberList[questionCounter];
+            if($longWords[aNumber]) {
                 window.responsiveVoice.speak(
-                    String("novecientos once"),
+                    $longWords[aNumber],
                     "Spanish Latin American Female");
             } else {
                 window.responsiveVoice.speak(
-                    String($numberList[questionCounter]),
+                    String(aNumber),
                     "Spanish Latin American Female");
             }
         }
