@@ -30,11 +30,15 @@
 	} */
 
 	h2 {
-        color: #00f;
-    }
+		color: white;
+		background-color: #00f;
+		margin: 0px;
+		padding-left: 10px;
+	}
 </style>
 
 <body>
+	<!-- The form and select tag are development/testing code -->
 	<!-- <form>
 		<select bind:value={selected}>
 			{#each options as anOption}
@@ -44,7 +48,9 @@
 			{/each}
 		</select>
 	</form> -->
-	<h2>Práctica: Los números en español</h2>
-	<Router routes={$routes}/>
-	<hr/>
+	<div style="width: 700px;">
+		<h2>Práctica: Los números en español</h2>
+		<Router routes={$routes}/>
+		<hr/>
+	</div>	
 </body>

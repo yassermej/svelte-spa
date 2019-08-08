@@ -61,27 +61,33 @@
 </script>
 
 <style>
-    .settings-label {
+    label {
         font-size: 1em;
-        color: red
+        color: red;
+        padding-left: 10px;
+        padding-top: 10px;
+        width: fit-content;
     }
 </style>
 
 <form>
-    <label for="setMin" class="settings-label">Lowest number in quiz</label>
+    <label for="setMin">Lowest number in quiz</label>
     <label name="setMin">
         <input type="number" bind:value={$lowestNumber} on:input={checkMin} min={$numberLimits.lower} max={$numberLimits.higher}>
         <input type="range" bind:value={$lowestNumber} on:input={checkMin} min={$numberLimits.lower} max={$numberLimits.higher}>
     </label>
-    <label for="setMax" class="settings-label">Highest number in quiz</label>
+    <label for="setMax">Highest number in quiz</label>
     <label name="setMax">
         <input type="number" bind:value={$highestNumber} on:input={checkMax} min={$numberLimits.lower} max={$numberLimits.higher}>
         <input type="range" bind:value={$highestNumber} on:input={checkMax} min={$numberLimits.lower} max={$numberLimits.higher}>
     </label>
-    <label for="setLength" class="settings-label">Number of questions</label>
+    <label for="setLength">Number of questions</label>
     <label name="setLength">
         <input type="number" bind:value={$quizLength} on:input={checkQuizLen} min=0 max={$numberLimits.questions}>
         <input type="range" bind:value={$quizLength} on:input={checkQuizLen} min=0 max={$numberLimits.questions}>
     </label>
-    <button on:click|preventDefault="{startQuiz}">Start Quiz</button>
+    <div style="padding-left: 10px;">
+        <button on:click|preventDefault="{startQuiz}">Start Quiz</button>
+    </div>
+    
 </form>

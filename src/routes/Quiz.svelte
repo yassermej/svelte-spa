@@ -5,6 +5,7 @@
     import { 
         quizLength,
         numberLimits,
+        audioIconPath,
         numberList, userResponses, totalCorrect
     } from '../stores/quiz-store.js';
 
@@ -23,7 +24,7 @@
     onMount(() => {
         // get things started by saying the first number when component mounts
         sayCurrentNumber();
-    })
+    });
 
     function sayCurrentNumber() {
         if(parseInt($numberList[questionCounter])) {
@@ -57,10 +58,11 @@
                 $totalCorrect++;
             }
             $userResponses[questionCounter] = parseInt(currentResponse);
+            console.log($numberList.length, questionCounter);
             questionCounter++;
             currentResponse = '';
 
-            if(questionCounter < $numberList.length) {
+            if($numberList.length > questionCounter) {
                 sayCurrentNumber();
             } else {
                 presentResults();
@@ -99,7 +101,7 @@
         <button class="playSound"
             type="button" 
             on:click="{sayCurrentNumber}">
-            <img src='images/iconfinder_volume-24_103167.png' 
+            <img src={$audioIconPath} 
                 alt="play sound" 
                 width="20px" height="20px" 
             />
