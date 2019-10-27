@@ -5,7 +5,7 @@
     import {
         numberList, userResponses, totalCorrect
     } from '../stores/quiz-store.js';
-    console.log($numberList);
+    // console.log($numberList);
 
     $: columnCount = Math.ceil(Number.parseInt($userResponses.length) / 10);
 
