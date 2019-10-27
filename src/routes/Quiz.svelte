@@ -59,7 +59,7 @@
                 $totalCorrect++;
             }
             $userResponses[questionCounter] = parseInt(currentResponse);
-            console.log($numberList.length, questionCounter);
+            // console.log($numberList.length, questionCounter);
             questionCounter++;
             currentResponse = '';
 
