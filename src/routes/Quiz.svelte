@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from 'svelte';
+    import { onMount, tick } from 'svelte';
     import { replace } from 'svelte-spa-router';
 
     import { 
@@ -13,6 +13,7 @@
     let currentResponse = "";
     let questionCounter = 0;
     let percentageCorrect = 0;
+    let flashValue = "progressDisplayContainer";
 
     $: if (questionCounter > 0) {
         percentageCorrect = (Number.parseInt(($totalCorrect / questionCounter) * 100));
@@ -51,13 +52,27 @@
         }
     }
 
-    function submitAnswer(event) {
-        if (!validateInput()) { return false; }
+    async function submitAnswer(event) {
+        if (!validateInput()) {
+            if(event.key === 'Enter') {
+                sayCurrentNumber()
+            }
+            return false;
+        }
 
         if(event.key === 'Enter' || event.type === "submit") {
             if(parseInt(currentResponse) === parseInt($numberList[questionCounter])) {
                 $totalCorrect++;
+                flashValue = "progressDisplayContainerCorrect";
+                await tick();
+            } else {
+                flashValue = "progressDisplayContainerWrong";
+                await tick();
             }
+            setTimeout(function(){ 
+                flashValue = "progressDisplayContainer";
+            }, 2000);
+
             $userResponses[questionCounter] = parseInt(currentResponse);
             // console.log($numberList.length, questionCounter);
             questionCounter++;
@@ -94,44 +109,78 @@
         display: inline-block;
         padding: auto;
     }
+
+    /* The animation code */
+    @keyframes correctAnswer {
+        0%   {background-color: transparent;}
+        50%  {background-color: green;}
+        100%  {background-color: transparent;}
+    }
+
+    @keyframes wrongAnswer {
+        0%   {background-color: transparent;}
+        50%  {background-color:red;}
+        100%  {background-color: transparent;}
+    }
+
+    /* The element to apply the animation to */
+    #progressDisplayContainer {
+        background-color: white;
+        animation-name: none;
+    }
+    #progressDisplayContainerCorrect {
+        background-color: transparent;
+        animation-name: correctAnswer;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+    }
+    #progressDisplayContainerWrong {
+        background-color: transparent;
+        animation-name: wrongAnswer;;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+    }
+
 </style>
 
-{#if $numberList}
-    <form on:submit|preventDefault="{submitAnswer}">
-        <label for="numberInput">Enter the number you hear</label>
-        <button class="playSound"
-            type="button" 
-            on:click="{sayCurrentNumber}">
-            <img src={$audioIconPath} 
-                alt="play sound" 
-                width="20px" height="20px" 
+<div id="{flashValue}">
+    {#if $numberList}
+        <form on:submit|preventDefault="{submitAnswer}">
+            <label for="numberInput">Enter the number you hear</label>
+            <button class="playSound"
+                type="button" 
+                on:click="{sayCurrentNumber}">
+                <img src={$audioIconPath} 
+                    alt="play sound" 
+                    width="20px" height="20px" 
+                />
+            </button>
+            <input type="number" 
+                class="numberInput"
+                name="numberInput"
+                bind:value="{currentResponse}"
+                on:keyup={submitAnswer}
+                min={$numberLimits.lower} max={$numberLimits.higher}
+                alt="input the number you hear"
+                placeholder="#?"
+                autofocus
             />
-        </button>
-        <input type="number" 
-            class="numberInput"
-            name="numberInput"
-            bind:value="{currentResponse}"
-            on:keyup={submitAnswer}
-            min={$numberLimits.lower} max={$numberLimits.higher}
-            alt="input the number you hear"
-            placeholder="#?"
-            autofocus
-        />
-        <button class="submitButton"
-            type="submit"
-            on:submit="{submitAnswer}">
-            Check
-        </button>
-                <button class="endQuiz"
-            type="button"
-            on:click="{presentResults}">
-            End
-        </button>
+            <button class="submitButton"
+                type="submit"
+                on:submit="{submitAnswer}">
+                Check
+            </button>
+                    <button class="endQuiz"
+                type="button"
+                on:click="{presentResults}">
+                End
+            </button>
 
-    </form>
-{:else}
-    <h1>QUIZ</h1>
-    <h3>Error: No number list!</h3>
-{/if}
-<p>{$totalCorrect} correct ({percentageCorrect}%)</p>
-<p>{$numberList.length - questionCounter} of {$numberList.length} remaining</p>
+        </form>
+    {:else}
+        <h1>QUIZ</h1>
+        <h3>Error: No number list!</h3>
+    {/if}
+    <p>{$totalCorrect} correct ({percentageCorrect}%)</p>
+    <p>{$numberList.length - questionCounter} of {$numberList.length} remaining</p>
+</div>
